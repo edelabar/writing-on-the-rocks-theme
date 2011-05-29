@@ -6,7 +6,7 @@
 
 get_header(); ?>
 
-  <div id="main" role="main">
+  <div id="main" role="main" class="search">
 
   <?php if (have_posts()) : ?>
 

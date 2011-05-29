@@ -10,9 +10,26 @@ function twentyten_remove_recent_comments_style() {
 }
 add_action( 'widgets_init', 'twentyten_remove_recent_comments_style' );
 
+function process_bloginfo($text) {
+	
+	if( get_bloginfo( 'description' ) == $text ) {
+		$pattern = '/&amp;/i';
+		$replacement = '<span class="amp">&amp;</span>';
+		$text = preg_replace($pattern, $replacement, $text);
+	
+		$pattern = '/{br}/i';
+		$replacement = '<br/>';
+		$text = preg_replace($pattern, $replacement, $text);
+	}
+	
+	return $text;
+}
+add_filter('bloginfo', 'process_bloginfo');
+
 // Custom HTML5 Comment Markup
 function mytheme_comment($comment, $args, $depth) {
-   $GLOBALS['comment'] = $comment; ?>
+   $GLOBALS['comment'] = $comment; 
+?>
    <li>
      <article <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
        <header class="comment-author vcard">
