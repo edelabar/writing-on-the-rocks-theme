@@ -8,7 +8,7 @@
  **/
 ?>
 
-<?php query_posts($query_string . '&meta_key=order&order_by=meta_value_num&order=ASC'); ?>
+<?php query_posts($query_string . '&meta_key=order&orderby=meta_value_num&order=ASC'); ?>
 
 <?php if (have_posts()) : ?>
 
@@ -47,13 +47,13 @@
 		}
 		add_filter( 'posts_where', 'filter_prev_where' );
 	?>
-	<?php $my_query = new WP_Query('posts_per_page=1&order_by=date&order=DESC'); ?>
+	<?php $my_query = new WP_Query('posts_per_page=1&orderby=date&order=DESC'); ?>
 	<?php if ($my_query->have_posts()) : $my_query->the_post(); ?>
   	<?php 
   		/* Get the date of the current post. */
 			$lastPub = get_the_date('Y/m/d');
   	?>
-		<p><a href="/<?php echo($lastPub) ?>">Previous Edition</a></p>
+		<p class="previous"><a href="/<?php echo($lastPub) ?>">&laquo; Previous Edition</a></p>
 	<?php endif; ?>
 	<?php remove_filter( 'posts_where', 'filter_prev_where' ); ?>
 	
@@ -72,15 +72,16 @@
 		}
 		add_filter( 'posts_where', 'filter_next_where' );
 	?>
-	<?php $my_query = new WP_Query('posts_per_page=1&order_by=date&order=ASC'); ?>
+	<?php $my_query = new WP_Query('posts_per_page=1&orderby=date&order=ASC'); ?>
 	<?php if ($my_query->have_posts()) : $my_query->the_post(); ?>
   	<?php 
   		/* Get the date of the current post. */
 			$lastPub = get_the_date('Y/m/d');
   	?>
-		<p><a href="/<?php echo($lastPub) ?>">Next Edition</a></p>
+		<p class="next"><a href="/<?php echo($lastPub) ?>">Next Edition &raquo;</a></p>
 	<?php endif; ?>
 	<?php remove_filter( 'posts_where', 'filter_next_where' ); ?>
+	<div style="clear:both;"></div>
 
 <?php else : ?>
 

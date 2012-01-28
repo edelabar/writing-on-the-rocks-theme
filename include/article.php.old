@@ -4,7 +4,6 @@
  * @subpackage Writing_on_the_Rocks
  */
 ?>
-<?php include_once "markdown.php"; ?>
 <div <?php post_class('spacer') ?>>
 	<article id="post-<?php the_ID(); ?>" class="<?php echo get_post_meta(get_the_ID(), 'pageClass', true); ?>">
 		<header>
@@ -32,45 +31,17 @@
 		
 		}
 		?>
-			
-			
-			<?php 
-				$custom = get_post_custom();
-				$italic = "";
-				if( isset($custom['_italicIntro'][0]) && $custom['_italicIntro'][0] == 'true') {
-					$italic = 'italic';
-				}
-				
-				if( isset($custom['_imageUrl'][0]) ) { 
-			?>
-				
-				<img class="alignleft post-image" src="<?php echo $custom['_imageUrl'][0]; ?>" alt="<?php echo $custom['_imageAlt'][0]; ?>"/>
-				
-			<?php 
-				} 
-			?>
 		
-		<section>	
-			<?php if( isset($custom['_content'][0]) ) { ?>
-				
-				<section class="intro <?php echo $italic; ?>">
-				
-					<?php echo Markdown($custom['_content'][0]); ?>
-				
-				</section>
-				
-			<?php } ?>
-			
-			<?php the_content($moreText); ?>
-			
-			<?php if( is_single() ) { ?>
-				<?php  
-					$dateString = 'year=' . get_the_date('Y') . '&monthnum=' . get_the_date('n') . '&day=' . get_the_date('j');
-				?>
-				<?php include('embed-author.php') ?>
-				<?php include('embed-upcoming.php') ?>
-			<?php } ?>
-		</section>
+		<?php the_content($moreText); ?>
+		
+		<?php if( is_single() ) { ?>
+			<?php 
+				$custom = get_post_custom(); 
+				$dateString = 'year=' . get_the_date('Y') . '&monthnum=' . get_the_date('n') . '&day=' . get_the_date('j');
+			?>
+			<?php include('embed-author.php') ?>
+			<?php include('embed-upcoming.php') ?>
+		<?php } ?>
 		
 		<div style="clear:both;"></div>
 	</article>

@@ -4,6 +4,15 @@
  * @subpackage Writing_on_the_Rocks
  */
 
+if( !is_admin() ){ 
+	// jQuery is included at the end of the doc, don't let plugins include it.
+	wp_deregister_script('jquery');
+	wp_deregister_script('l10n');
+}
+
+/* Externalize WP_HashCache JavaScript to script.js (prevent from adding to head) */
+remove_action('wp_head', 'wphc_posthead');
+
 function twentyten_remove_recent_comments_style() {
 	global $wp_widget_factory;
 	remove_action( 'wp_head', array( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ) );
@@ -30,26 +39,29 @@ add_filter('bloginfo', 'process_bloginfo');
 function mytheme_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment; 
 ?>
-   <li>
-     <article <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-       <header class="comment-author vcard">
-          <?php echo get_avatar($comment,$size='48',$default='<path_to_url>' ); ?>
-          <?php printf(__('<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link()) ?>
-          <time><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php printf(__('%1$s at %2$s'), get_comment_date(),  get_comment_time()) ?></a></time>
-          <?php edit_comment_link(__('(Edit)'),'  ','') ?>
-       </header>
-       <?php if ($comment->comment_approved == '0') : ?>
-          <em><?php _e('Your comment is awaiting moderation.') ?></em>
-          <br />
-       <?php endif; ?>
-
-       <?php comment_text() ?>
-
-       <nav>
-         <?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-       </nav>
-     </article>
-    <!-- </li> is added by wordpress automatically -->
+	<li>
+  	<article <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
+			<header class="comment-author vcard">
+				<?php echo get_avatar($comment,$size='48',$default='<path_to_url>' ); ?>
+				<?php printf(__('<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link()) ?>
+				<?php edit_comment_link(__('(Edit)'),'  ','') ?>
+			</header>
+			<?php if ($comment->comment_approved == '0') : ?>
+				<em><?php _e('Your comment is awaiting moderation.') ?></em>
+				<br />
+			<?php endif; ?>
+			
+			<?php comment_text() ?>
+			
+			<nav>
+				<?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+			</nav>
+			
+			<footer>
+				<time><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php printf(__('%1$s at %2$s'), get_comment_date(),  get_comment_time()) ?></a></time>
+			</footer>
+		</article>
+	<!-- </li> is added by wordpress automatically -->
 <?php
 }
 
@@ -90,3 +102,11 @@ function versioned_resource($relative_url){
 
   return $relative_url.$file_version;
 }
+
+function myFeedExcluder($query) {
+ 	if ($query->is_feed) {
+   		$query->set('cat',RSS_EXCLUDE); // Defined in wp-config.php
+ 	}
+	return $query;
+}
+add_filter('pre_get_posts','myFeedExcluder');

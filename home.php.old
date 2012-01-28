@@ -19,23 +19,28 @@ if (have_posts()) {
 get_header(); ?>
 
 <div id="main" role="main" class="home">
-  <?php if (have_posts()) : ?>  	
-  	<?php if ( is_home() ) {
-  		// Exclude "Upcoming" posts from the Home page flow… (WotR artifact)
-		query_posts($query_string . '&cat='.RSS_EXCLUDE);
-	}
-	?>
-    <?php while (have_posts()) : the_post(); ?>
+  <?php if (have_posts()) : ?>  	<?php while (have_posts()) : the_post(); ?>
+  		<?php
+  			if( $lastPub == "" ) {
+  				if( get_the_date('Y-n-j') != $thisPub ) {
+  					$lastPub = get_the_date('Y/m/d');
+  					break;
+  				}
+  			}
+  		?>
+  	<?php endwhile; ?>
+    
+    <?php /* Get all posts from the last publish date */ ?>
+		<?php query_posts('year=' . $year . '&monthnum=' . $month . '&day=' . $day . '&meta_key=order&orderby=meta_value_num&order=ASC'); ?> 
+		<?php while (have_posts()) : the_post(); ?>
 	
       <?php include('include/article.php') ?>
 		
-	<?php endwhile; ?>
-	
-	<p class="previous"><?php next_posts_link('Older Entries &raquo;') ?></p>	
-	<p class="next"><?php previous_posts_link('&laquo; Newer Entries') ?></p>
-	
-	<div style="clear:both;"></div>
-	
+		<?php endwhile; ?>
+		
+		<p class="previous"><a href="/<?php echo($lastPub) ?>">&laquo; Previous Edition</a></p>
+		<div style="clear:both;"></div>
+		
   <?php else : ?>
 
     <h2>Not Found</h2>

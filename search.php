@@ -21,14 +21,7 @@ get_header(); ?>
 
       <article <?php post_class() ?>>
         <h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-        <time><?php the_time('l, F jS, Y') ?></time>
-
-        <footer>
-          <?php the_tags('Tags: ', ', ', '<br />'); ?> 
-          Posted in <?php the_category(', ') ?>
-          | <?php edit_post_link('Edit', '', ' | '); ?>
-          <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
-        </footer>
+        <p>Published on: <a href="/<?php the_time('Y/m/d')?>"><time><?php the_time('l, F jS, Y') ?></time></a></p>
       </article>
 
     <?php endwhile; ?>
