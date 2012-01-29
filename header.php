@@ -18,8 +18,7 @@
 <?php versioned_stylesheet($GLOBALS["TEMPLATE_RELATIVE_URL"]."style.css") ?>
 <script type="text/javascript" src="http://use.typekit.com/are0cfr.js"></script>
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-<?php versioned_javascript($GLOBALS["TEMPLATE_RELATIVE_URL"]."js/modernizr-1.7.min.js") ?>
-<?php versioned_javascript($GLOBALS["TEMPLATE_RELATIVE_URL"]."js/respond.min.js") ?>
+<?php versioned_javascript($GLOBALS["TEMPLATE_RELATIVE_URL"]."js/modernizr-2.0.6.min.js") ?>
 <?php global $canonical, $issue; ?>
 <?php if( isset($canonical) ): ?><link rel="canonical" href="<?php echo get_option('home') . $canonical; ?>"/><?php endif; ?>
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />

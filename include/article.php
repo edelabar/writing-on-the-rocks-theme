@@ -10,8 +10,10 @@
 		<header>
 			<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 			<?php if( !in_category( 'upcoming' ) ) { ?>
+			<div>
 				<time datetime="<?php the_time('Y-m-d')?>"><?php the_time('F jS, Y') ?></time>
 				<span class="author"><?php if( in_category( 'edited' ) ) { ?>Edited <?php } ?>by <?php the_author() ?></span>
+			</div>
 			<?php } ?>
 		</header>
 		

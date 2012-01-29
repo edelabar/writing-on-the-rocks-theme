@@ -11,9 +11,9 @@
 	</div></footer>
   
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="<?php echo $GLOBALS["TEMPLATE_RELATIVE_URL"] ?>js/jquery-1.6.1.min.js">\x3C/script>')</script>
-<?php versioned_javascript($GLOBALS["TEMPLATE_RELATIVE_URL"]."js/script.js") ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="<?php echo $GLOBALS["TEMPLATE_RELATIVE_URL"] ?>js/jquery-1.7.1.min.js">\x3C/script>')</script>
+<?php versioned_javascript($GLOBALS["TEMPLATE_RELATIVE_URL"]."js/script.min.js") ?>
 <?php wp_footer(); ?>
 <!-- Place this tag in your head or just before your close body tag -->
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
